@@ -3,6 +3,7 @@ import { fetchJSON, fadeOut, fadeIn, replaceClass, isArrayEmpty } from '../utils
 
 export class BaseController {
     constructor() {
+        this.PLUGIN = ''
         this.LIVE_STATUS = 'live'
         this.currentItem = null
         this.currentService = null
@@ -11,7 +12,6 @@ export class BaseController {
         this.curStatus = this.LIVE_STATUS
         this.curPlugin = null
         this.curtext = ''
-        this.nextSong = ''
         this.ws = null
         this.elements = null
     }
@@ -54,7 +54,7 @@ export class BaseController {
     }
 
     handleWebSocketMessage(data) {
-        this.curStatus = (data.theme || data.display || data.blank) ? '' : 'live'
+        this.curStatus = (data.theme || data.display || data.blank) ? '' : this.LIVE_STATUS
 
         if (this.currentItem !== data.item || this.currentService !== data.service) {
             this.currentItem = data.item
@@ -71,7 +71,6 @@ export class BaseController {
     async loadService() {
         try {
             const data = await fetchJSON(`${CONFIG.API_BASE}/service/items`)
-            this.nextSong = ''
 
             const selectedItem = data.find(item => item.selected)
 
@@ -87,9 +86,8 @@ export class BaseController {
     }
 
     updateSongTitle(title = '') {
-        if (!this.elements.songTitle) return
-
-        this.elements.songTitle.innerHTML = title
+        const shouldShowTitle = this.curPlugin === this.PLUGIN && this.curStatus === this.LIVE_STATUS
+        this.elements.songTitle?.innerHTML = shouldShowTitle ? title : ''
     }
 
     async loadSlides() {
@@ -118,6 +116,16 @@ export class BaseController {
             this.animateSlideChange(text)
         }
     }
+
+    renderContent(content) {
+        const showContent = this.curPlugin === this.PLUGIN && this.curStatus === this.LIVE_STATUS
+        const [oldClass, newClass] = showContent
+            ? ['slideclear', 'slide']
+            : ['slide', 'slideclear']
+        replaceClass(this.elements.bgSlide, oldClass, newClass)
+        return showContent ? content : ''
+    }
+
     async animateSlideChange(text) {
         if (!this.elements.currentSlide) return
 
@@ -155,13 +163,8 @@ export class BaseController {
         container.appendChild(fragment)
     }
 
-    // Subclasses override these
-    renderContent(content) {
-        return content
-    }
-
     wrapLines(lines) {
-        return lines.map(l => l?.trim()).filter(Boolean)
+        return lines
     }
 
     start() {
