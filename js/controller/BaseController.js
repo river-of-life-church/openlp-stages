@@ -87,7 +87,9 @@ export class BaseController {
 
     updateSongTitle(title = '') {
         const shouldShowTitle = this.curPlugin === this.PLUGIN && this.curStatus === this.LIVE_STATUS
-        this.elements.songTitle?.innerHTML = shouldShowTitle ? title : ''
+        if(this.elements?.songTitle) {
+            this.elements.songTitle.innerHTML = shouldShowTitle ? title : ''
+        }
     }
 
     async loadSlides() {
