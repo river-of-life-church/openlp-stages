@@ -27,25 +27,28 @@
 # Temple Place, Suite 330, Boston, MA 02111-1307 USA                          #
 ###############################################################################
 -->
-
 <head>
   <meta charset="utf-8" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-  <title>OpenLP - Bible</title>
-  <link rel="stylesheet" href="../fonts/fonts.css" />
-  <link rel="stylesheet" href="bible.css" />
-  <link rel="shortcut icon" type="image/x-icon" href="../js/images/favicon.ico">
-  <script type="module" src="../js/bible.js"></script>
+  <title>OpenLP - Bible Centre Lower</title>
+  <link rel="stylesheet" href="stage.css" />
 </head>
-
 <body>
-  <div id="bgslide" class="slide">
-    <div id="songtitle"></div>
-    <div id="currentslide"></div>
-  </div>
+	<div class="container">
+		<div id="bgslide">
+			<div id="title">
+				<span id="book"></span>
+				<span id="verse"></span>
+				<span id="version"></span>
+			</div>
+			<div id="contents">
+				<p id="text"></p>
+			</div>
+		</div>
+	</div>
+  <script type="text/javascript" src="stage.js"></script>
 </body>
-
 </html>

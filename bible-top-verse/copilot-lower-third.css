@@ -1,0 +1,102 @@
+/* Lower-third style inspired by bible-lower-third.png
+   Uses solid colors (no images), large title banner and a dark translucent content box.
+*/
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: transparent;
+}
+
+.container {
+  position: relative;
+  height: calc(100vh - 48px);
+  padding: 24px;
+  box-sizing: border-box;
+  display: block;
+}
+
+#bgslide {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 300ms ease-in, visibility 0ms ease-in 300ms;
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  bottom: 24px;
+  display: block;
+}
+
+#bgslide.show {
+  visibility: visible;
+  opacity: 1;
+  transition-delay: 0ms;
+}
+
+/* Title banner (upper-left) */
+#title {
+  position: absolute;
+  left: 8px;
+  top: -22px;
+  background-color: #c0392b; /* strong red like the sample */
+  color: #ffffff;
+  padding: 10px 18px;
+  font-weight: 800;
+  font-size: 1.05rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: 6px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.4);
+  display: inline-block;
+}
+
+/* Main content box (large, dark, semi-opaque) */
+#contents {
+  box-sizing: border-box;
+  font-size: 1.6rem;
+  min-height: 140px;
+  width: 100%;
+  padding: 26px 28px;
+  color: #ffffff;
+  background-color: rgba(12,12,12,0.78); /* solid dark feel without image */
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: stretch;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.55);
+}
+
+#contents::before {
+  content: '';
+  position: absolute;
+}
+
+#contents #text {
+  margin: 0;
+  padding: 0;
+  flex: 1;
+  text-align: justify;
+  font-weight: 700;
+  line-height: 1.12;
+  font-size: 1.25rem; /* large readable text */
+  hyphens: auto;
+}
+
+#version {
+  text-align: right;
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.85);
+}
+
+/* Responsive tweaks */
+@media (max-width: 900px) {
+  #contents #text { font-size: 1.5rem; }
+  #title { font-size: 0.95rem; padding: 8px 12px; }
+}
+
+@media (max-width: 520px) {
+  #contents { padding: 18px; }
+  #contents #text { font-size: 1.05rem; }
+  #title { top: -18px; left: 6px; }
+}
