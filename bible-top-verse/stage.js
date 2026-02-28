@@ -13,16 +13,20 @@
 	function handleSlideshow(item) {
 		if (item.name === 'bibles') {
 			const [verse, version] = item.footer;
-			const [versionName, license] = version.split(',').map(v => v.trim());
-			const slide = item.slides.find(s => s.selected);
 
-			const book = verse.substr(0, verse.indexOf(':'))
-			const curVerse = slide.tag;
-			titleEl.innerText = `${book}:${curVerse}`
-			const result = slide.text.replace(new RegExp('^\\d+:\\d+\\s*'), '');
-			textEl.innerText = result;
-			versionEl.innerText = license;
+			const lastSpace = verse.lastIndexOf(' ');
+			const book = verse.slice(0, lastSpace);
+			const [chapter, verseRange] = verse.slice(lastSpace + 1).split(':');
+
+			const [versionName, license] = version.split(',').map(v => v.trim());
+
+			const slide = item.slides.find(s => s.selected);
+			const currentVerse = slide.tag;
+			const text = slide.text.replace(/^\d+:\d+\s*/, '');
 			
+			titleEl.innerText = `${book} ${chapter}:${currentVerse}`;
+			textEl.innerText = text;
+			versionEl.innerText = license;
 			bgEl.classList.add('show');
 		} else {
 			hideSlide();
