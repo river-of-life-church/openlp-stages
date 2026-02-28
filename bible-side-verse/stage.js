@@ -17,12 +17,15 @@
 			const [versionName, license] = version.split(',').map(v => v.trim());
 			const slide = item.slides.find(s => s.selected);
 
-			const [book, curVerse] = [verse, slide.text].map(v => v.substring(0, v.lastIndexOf(' ')));
+			const versePattern = new RegExp('^\\d+:\\d+\\s*')
+			const book = verse.substr(0, verse.lastIndexOf(' '))
+			const curVerse = slide.text.match(versePattern)[0].trim()
+			const result = slide.text.replace(versePattern, '')
 			bookEl.innerText = book;
 			verseEl.innerText = curVerse;
 			versionEl.innerText = license;
 
-			textEl.innerText = slide.text.substring(slide.text.indexOf(' ') + 1);
+			textEl.innerText = result;
 
 			bgEl.classList.add('show');
 		} else {

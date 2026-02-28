@@ -29,7 +29,7 @@ body {
 }
 
 #title {
-	font-size: x-large;
+	font-size: large;
 	/* font-weight: 900; */
 	/* font-style: italic; */
 	font-family: Impact, 'Arial Narrow', sans-serif;
@@ -68,7 +68,7 @@ body {
 
 #version {
 	text-align: right;
-	font-size: x-small;
+	font-size: small;
 	font-weight: normal;
 	color: #aaaaaa;
 	margin-top: 6px;
