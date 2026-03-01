@@ -24,6 +24,7 @@ body {
   right: 24px;
   bottom: 24px;
   display: block;
+  margin: 0 100px;
 }
 
 #bgslide.show {
@@ -37,7 +38,9 @@ body {
   position: absolute;
   left: 8px;
   top: -22px;
-  background-color: #c0392b; /* strong red like the sample */
+  /* background-color: rgba(2,171,243,1); /* strong red like the sample */
+  background-color: rgba(0,98,171,1); /* strong red like the sample */
+
   color: #ffffff;
   padding: 10px 18px;
   font-weight: 800;
@@ -57,7 +60,7 @@ body {
   width: 100%;
   padding: 26px 28px;
   color: #ffffff;
-  background-color: rgba(12,12,12,0.78); /* solid dark feel without image */
+  background-color: rgba(12,12,12,0.95); /* solid dark feel without image */
   border-radius: 8px;
   border: 1px solid rgba(255,255,255,0.04);
   display: flex;
@@ -79,7 +82,7 @@ body {
   text-align: justify;
   font-weight: 700;
   line-height: 1.12;
-  font-size: 1.25rem; /* large readable text */
+  font-size: 28px; /* large readable text */
   hyphens: auto;
 }
 
