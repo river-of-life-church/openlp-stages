@@ -14,8 +14,7 @@
 			const lines = slide?.text?.split('\n')
 
 			contentsEl.innerHTML = wrapLines(lines)
-				.filter(Boolean)
-				.map(line => `<span class="line">${line}</span>`)
+				.map(line => `<span class="line">${line ?? ''}</span>`)
 				.join('');
 
 			bgEl.classList.add('show')
@@ -27,16 +26,18 @@
 	function wrapLines(lines = []) {
 		if (lines.length <= 2) return lines
 
-		const pairs = []
-		for (let i = 0; i < lines.length; i += 2) {
-			pairs.push(lines.slice(i, i + 2))
-		}
-
-		return pairs
-			.map(([first, second]) => 
-				[first?.trim(), second?.trim()].filter(Boolean).join(', ')
-			)
-			.filter(Boolean)
+		return lines.reduce((acc, text, i) => {
+			if (i % 2 === 0) {
+				acc.push([]);
+			}
+			let sanitized = text.trim();
+			if (sanitized[sanitized.length -1] == ',') {
+				sanitized = sanitized.slice(0, -1);
+			}
+			acc[acc.length -1].push(sanitized);
+			return acc;
+		}, [])
+			.map(([a, b]) => `${a ?? ''}${Boolean(b) ? ', ' + b : ''}`);
 	}
 
 	function hideSlide() {
