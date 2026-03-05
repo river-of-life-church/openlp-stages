@@ -1,7 +1,7 @@
 (() => {
-  const host = window.location.hostname;
-  const websocket_port = 4317;
-  const ws = new WebSocket(`ws://${host}:${websocket_port}`);
+	const host = window.location.hostname;
+	const websocket_port = 4317;
+	const ws = new WebSocket(`ws://${host}:${websocket_port}`);
 
 	const bgEl = document.getElementById('bgslide');
 	const titleEl = document.getElementById('title');
@@ -19,11 +19,11 @@
 			titleEl.textContent = `${bookChapter}:${tag}`;
 			textEl.textContent = text.replace(/^\d+:\d+\s*/, '');
 			versionEl.textContent = version;
-			
+
 			bgEl.classList.add('show');
 		} else {
 			hideSlide();
-		} 
+		}
 	}
 
 	function hideSlide() {

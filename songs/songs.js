@@ -31,10 +31,10 @@
 				acc.push([]);
 			}
 			let sanitized = text.trim();
-			if (sanitized[sanitized.length -1] == ',') {
+			if (sanitized[sanitized.length - 1] == ',') {
 				sanitized = sanitized.slice(0, -1);
 			}
-			acc[acc.length -1].push(sanitized);
+			acc[acc.length - 1].push(sanitized);
 			return acc;
 		}, [])
 			.map(([a, b]) => `${a ?? ''}${Boolean(b) ? ', ' + b : ''}`);
