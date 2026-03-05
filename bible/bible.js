@@ -16,12 +16,9 @@
 			const [versionName, license] = version.split(',').map(v => v.trim());
 			const slide = item.slides.find(s => s.selected);
 
-			const book = verse.substr(0, verse.indexOf(':'))
-			const curVerse = slide.tag;
-			titleEl.innerText = `${book}:${curVerse}`
-			const result = slide.text.replace(new RegExp('^\\d+:\\d+\\s*'), '');
-			textEl.innerText = result;
-			versionEl.innerText = license;
+			titleEl.innerText = verse;
+			textEl.innerText = slide.text.substr(slide.text.indexOf(' ') + 1);
+			versionEl.innerText = versionName;
 			
 			bgEl.classList.add('show');
 		} else {
