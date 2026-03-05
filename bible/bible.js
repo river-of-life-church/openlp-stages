@@ -12,13 +12,13 @@
 
 	function handleSlideshow(item) {
 		if (item.name === 'bibles') {
-			const [verse, version] = item.footer;
-			const [versionName, license] = version.split(',').map(v => v.trim());
-			const slide = item.slides.find(s => s.selected);
+			const { footer: [passageRef], data: { bibles: [{ version }] }, slides } = item;
+			const { tag, text } = slides.find(s => s.selected);
+			const bookChapter = passageRef.substring(0, passageRef.lastIndexOf(':'));
 
-			titleEl.innerText = verse;
-			textEl.innerText = slide.text.substr(slide.text.indexOf(' ') + 1);
-			versionEl.innerText = versionName;
+			titleEl.textContent = `${bookChapter}:${tag}`;
+			textEl.textContent = text.replace(/^\d+:\d+\s*/, '');
+			versionEl.textContent = version;
 			
 			bgEl.classList.add('show');
 		} else {
