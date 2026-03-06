@@ -7,7 +7,7 @@ body {
 	display: flex;
 	flex-direction: column;
 	justify-content: end;
-	height: calc(100vh - 48px); /* - padding x 2 */
+	height: calc(100vh - 15px); /* - padding x 2 */
 	padding: 0 124px 24px 124px;
 }
 
@@ -21,7 +21,7 @@ body {
 	width: 100%;
 	gap: 4px;
 	border-radius: 10px;
-	background-color: rgba(12, 12, 12, 0.85);
+	background-color: rgba(12, 12, 12, 0.95);
 	border: 1px solid rgba(255, 255, 255, 0.04);
 	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55);
 }
