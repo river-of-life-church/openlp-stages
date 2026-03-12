@@ -13,11 +13,10 @@
 	function handleSlideshow(item) {
 		if (item.name === 'bibles') {
 			const { footer: [passageRef], data: { bibles: [{ version }] }, slides } = item;
-			const { tag, text } = slides.find(s => s.selected);
-			const bookChapter = passageRef.substring(0, passageRef.lastIndexOf(':'));
+			const { text } = slides.find(s => s.selected);
 
-			titleEl.textContent = `${bookChapter}:${tag}`;
-			textEl.textContent = text.replace(/^\d+:\d+\s*/, '');
+			titleEl.textContent = passageRef;
+			textEl.textContent = text;
 			versionEl.textContent = version;
 
 			bgEl.classList.add('show');
