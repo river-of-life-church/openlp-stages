@@ -11,21 +11,25 @@
 
 	const getLiveData = () => fetch("/api/v2/controller/live-items").then(r => r.json());
 
-	// Build a tag → verse lookup from slides that have a chapter:verse prefix
-	const buildVerseMap = (slides) => Object.fromEntries(
-		slides
-			.filter(s => versePattern.test(s.text))
-			.map(s => [s.tag, s.text.match(versePattern).slice(1, 3)])
-	);
+	// Build a tag → { verse, text } lookup, joining all slides that share the same tag
+	const buildVerseMap = (slides) => slides.reduce((map, {tag, text}) => {
+		const cleaned = text.replace(versePattern, '');
+		if (!map[tag]) {
+			const match = text.match(versePattern);
+			map[tag] = { verse: match?.[2] ?? '', text: cleaned };
+		} else {
+			map[tag].text += ' ' + cleaned;
+		}
+		return map;
+	}, {});
 
 	function handleSlideshow(item) {
 		if (item.name === 'bibles') {
 			const { footer: [passageRef], data: { bibles: [{ version }] }, slides } = item;
-			const { tag, text } = slides.find(s => s.selected);
+			const { tag } = slides.find(s => s.selected);
 			const verseMap = buildVerseMap(slides);
 			const bookChapter = passageRef.substring(0, passageRef.lastIndexOf(':'));
-			const [, verse] = verseMap[tag] ?? [];
-			const verseText = text.replace(versePattern, '');
+			const { verse, text: verseText } = verseMap[tag];
 
 			titleEl.textContent = verse ? `${bookChapter}:${verse}` : passageRef;
 			textEl.textContent = verseText || text;
