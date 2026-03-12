@@ -7,16 +7,28 @@
 	const titleEl = document.getElementById('title');
 	const textEl = document.getElementById('text');
 	const versionEl = document.getElementById('version');
+	const versePattern = /^(\d+):(\d+)\s*/;
 
 	const getLiveData = () => fetch("/api/v2/controller/live-items").then(r => r.json());
+
+	// Build a tag → verse lookup from slides that have a chapter:verse prefix
+	const buildVerseMap = (slides) => Object.fromEntries(
+		slides
+			.filter(s => versePattern.test(s.text))
+			.map(s => [s.tag, s.text.match(versePattern).slice(1, 3)])
+	);
 
 	function handleSlideshow(item) {
 		if (item.name === 'bibles') {
 			const { footer: [passageRef], data: { bibles: [{ version }] }, slides } = item;
-			const { text } = slides.find(s => s.selected);
+			const { tag, text } = slides.find(s => s.selected);
+			const verseMap = buildVerseMap(slides);
+			const bookChapter = passageRef.substring(0, passageRef.lastIndexOf(':'));
+			const [, verse] = verseMap[tag] ?? [];
+			const verseText = text.replace(versePattern, '');
 
-			titleEl.textContent = passageRef;
-			textEl.textContent = text;
+			titleEl.textContent = verse ? `${bookChapter}:${verse}` : passageRef;
+			textEl.textContent = verseText || text;
 			versionEl.textContent = version;
 
 			bgEl.classList.add('show');
