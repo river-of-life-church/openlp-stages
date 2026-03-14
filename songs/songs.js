@@ -11,7 +11,7 @@
 	function handleSlideshow(item) {
 		if (item.name === 'songs') {
 			const slide = item.slides.find(s => s.selected)
-			const lines = slide?.text?.split('\n')
+			const lines = slide?.text?.toUpperCase()?.split('\n')
 
 			contentsEl.innerHTML = wrapLines(lines)
 				.map(line => `<span class="line">${line ?? ''}</span>`)
